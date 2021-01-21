@@ -46,7 +46,7 @@ public class GitLabPluginConfigurationTest {
 
     @Before
     public void before() {
-        settings = new MapSettings(new PropertyDefinitions(GitLabPlugin.definitions()));
+        settings = new MapSettings(new PropertyDefinitions(System2.INSTANCE, GitLabPlugin.definitions()));
         settings.setProperty(CoreProperties.SERVER_BASE_URL, "http://myserver");
         config = new GitLabPluginConfiguration(settings.asConfig(), new System2());
     }

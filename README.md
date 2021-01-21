@@ -7,6 +7,13 @@ Inspired by https://github.com/SonarCommunity/sonar-github
 
 # Current version
 
+## Version 4.3.0
+
+ * merged [fingerprint fix PR](https://github.com/javamachr/sonar-gitlab-plugin/pull/1)
+ * switched to sonar API v8.6.0.39681
+
+**Only SonarQube  8.6**
+
 ## Version 4.2.0
 
 **Only SonarQube  8.2**
