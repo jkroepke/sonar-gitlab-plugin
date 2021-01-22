@@ -32,7 +32,7 @@ public class GitLabPluginTest {
 
     @Test
     public void uselessTest() {
-        final Version version = Version.parse("6.7");
+        final Version version = Version.parse("7.9.1");
         Plugin.Context context = new Plugin.Context(SonarRuntimeImpl.forSonarQube(version, SonarQubeSide.SCANNER, SonarEdition.COMMUNITY));
         new GitLabPlugin().define(context);
         assertThat(context.getExtensions().size()).isGreaterThan(7);

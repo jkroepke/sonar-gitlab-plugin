@@ -31,7 +31,6 @@ import org.mockito.AdditionalMatchers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.sonar.api.CoreProperties;
-import org.sonar.api.batch.AnalysisMode;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.config.PropertyDefinitions;
@@ -55,7 +54,6 @@ public class ReporterBuilderTest {
     private ReporterBuilder reporterBuilder;
     private SonarFacade sonarFacade;
     private CommitFacade commitFacade;
-    private AnalysisMode analysisMode;
 
     @Before
     public void prepare() {
@@ -67,14 +65,9 @@ public class ReporterBuilderTest {
         settings.setProperty(CoreProperties.SERVER_BASE_URL, "http://myserver");
         settings.setProperty(GitLabPlugin.GITLAB_COMMIT_SHA, "abc123");
 
-        analysisMode = Mockito.mock(AnalysisMode.class);
-        when(analysisMode.isIssues()).thenReturn(false);
-        when(analysisMode.isPreview()).thenReturn(true);
-        when(analysisMode.isPublish()).thenReturn(false);
-
         GitLabPluginConfiguration config = new GitLabPluginConfiguration(settings.asConfig(), new System2());
 
-        reporterBuilder = new ReporterBuilder(config, sonarFacade, commitFacade, new MarkDownUtils(), analysisMode);
+        reporterBuilder = new ReporterBuilder(config, sonarFacade, commitFacade, new MarkDownUtils());
     }
 
     @Test
@@ -552,7 +545,7 @@ public class ReporterBuilderTest {
         reporterBuilder.build(null, Arrays.asList(newIssue, globalIssue, issueOnProject, issueOnDir, fileNotInPR, lineNotVisible, notNewIssue));
 
         Mockito.verify(commitFacade).writeJsonFile(Mockito.contains(
-                "[{\"fingerprint\":\"null\",\"description\":\"msg\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"null\",\"description\":\"msg4\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"null\",\"description\":\"msg5\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"null\",\"description\":\"msg1\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":1,\"end\":1}}},{\"fingerprint\":\"null\",\"description\":\"msg2\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":2,\"end\":2}}},{\"fingerprint\":\"null\",\"description\":\"msg3\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":1,\"end\":1}}}]"));
+                "[{\"fingerprint\":\"06496daf6fab6a0f97d6e0469e23c314\",\"description\":\"msg\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"0c0d7bbe0396951af65c450966b422fb\",\"description\":\"msg4\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"7d626e4f4d387b14046054a2c2eff2ff\",\"description\":\"msg5\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"42e8b6ecbbab8acf76ead03757e49300\",\"description\":\"msg1\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":1,\"end\":1}}},{\"fingerprint\":\"52660d2146c00c13d697e8a12be7cad3\",\"description\":\"msg2\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":2,\"end\":2}}},{\"fingerprint\":\"c6acd4f8aa70e27dde47469a54efdebe\",\"description\":\"msg3\",\"severity\":\"blocker\",\"location\":{\"path\":\"null\",\"lines\": { \"begin\":1,\"end\":1}}}]"));
     }
 
     @Test

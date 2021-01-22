@@ -83,6 +83,9 @@
     <contributor>
       <name>David Marin Vaquero</name>
     </contributor>
+    <contributor>
+      <name>Jakub Vavrik</name>
+    </contributor>
   </contributors>
   <scm>
     <url>https://github.com/gabrie-allaigre/sonar-gitlab-plugin</url>
@@ -142,6 +145,12 @@
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-plugin-api-impl</artifactId>
+      <version>${sonar.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-ws</artifactId>
       <version>${sonar.version}</version>
     </dependency>
@@ -172,12 +181,6 @@
        <version>30.1-jre</version>
     </dependency>
     <!-- unit tests -->
-    <dependency>
-    <groupId>org.sonarsource.sonarqube</groupId>
-    <artifactId>sonar-plugin-api-impl</artifactId>
-    <version>${sonar.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
       <artifactId>sonar-batch</artifactId>
