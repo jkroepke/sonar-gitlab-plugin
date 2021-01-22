@@ -133,7 +133,8 @@ public class ReporterTest {
 
         reporter.process(Utils.newIssue("456", "component", null, 20, Severity.INFO, true, "Issue \"NULL\"", "rule"), null, null, GITLAB_URL, "file", "http://myserver", true);
 
-        Assertions.assertThat(reporter.buildJson()).isEqualTo("[{\"fingerprint\":\"456\",\"description\":\"Issue \\\"NULL\\\"\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":20,\"end\":20}}}]");
+        Assertions.assertThat(reporter.buildJson()).isEqualTo("[{\"fingerprint\":\"22067daa06aa1812f26340c9e511cf4d\",\"description\":\"Issue "
+                + "\\\"NULL\\\"\",\"severity\":\"info\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":20,\"end\":20}}}]");
     }
 
     @Test
@@ -155,7 +156,15 @@ public class ReporterTest {
             reporter.process(Utils.newIssue("tata_" + i, "component", null, null, Severity.INFO, true, "Issue", "rule" + i), null, null, GITLAB_URL, "file", "http://myserver/rule" + i, true);
         }
 
-        Assertions.assertThat(reporter.buildJson()).isEqualTo("[{\"fingerprint\":\"tata_0\",\"description\":\"Issue\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"tata_1\",\"description\":\"Issue\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"tata_2\",\"description\":\"Issue\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"tata_3\",\"description\":\"Issue\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"tata_4\",\"description\":\"Issue\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}}]");
+        Assertions.assertThat(reporter.buildJson()).isEqualTo(
+                "[{\"fingerprint\":\"1a9ca945139cfb261f44658f374051a1\",\"description\":\"Issue\",\"severity\":\"info\","
+                        + "\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"1a9ca945139cfb261f44658f374051a1\","
+                        + "\"description\":\"Issue\",\"severity\":\"info\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},"
+                        + "{\"fingerprint\":\"1a9ca945139cfb261f44658f374051a1\",\"description\":\"Issue\",\"severity\":\"info\","
+                        + "\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},{\"fingerprint\":\"1a9ca945139cfb261f44658f374051a1\","
+                        + "\"description\":\"Issue\",\"severity\":\"info\",\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}},"
+                        + "{\"fingerprint\":\"1a9ca945139cfb261f44658f374051a1\",\"description\":\"Issue\",\"severity\":\"info\","
+                        + "\"location\":{\"path\":\"file\",\"lines\": { \"begin\":0,\"end\":0}}}]");
     }
 
     @Test
