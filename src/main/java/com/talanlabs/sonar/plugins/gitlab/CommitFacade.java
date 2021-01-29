@@ -59,9 +59,7 @@ public class CommitFacade {
 
         this.ruleUrlPrefix = gitLabPluginConfiguration.baseUrl();
 
-        if (GitLabPlugin.V3_API_VERSION.equals(gitLabPluginConfiguration.apiVersion())) {
-            this.gitLabWrapper = new GitLabApiV3Wrapper(gitLabPluginConfiguration);
-        } else if (GitLabPlugin.V4_API_VERSION.equals(gitLabPluginConfiguration.apiVersion())) {
+        if (GitLabPlugin.V4_API_VERSION.equals(gitLabPluginConfiguration.apiVersion())) {
             this.gitLabWrapper = new GitLabApiV4Wrapper(gitLabPluginConfiguration);
         }
     }

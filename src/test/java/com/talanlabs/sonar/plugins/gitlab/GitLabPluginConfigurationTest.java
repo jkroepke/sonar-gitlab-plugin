@@ -217,8 +217,6 @@ public class GitLabPluginConfigurationTest {
         Assertions.assertThat(config.prefixDirectory()).isEqualTo("/src");
 
         Assertions.assertThat(config.apiVersion()).isEqualTo(GitLabPlugin.V4_API_VERSION);
-        settings.setProperty(GitLabPlugin.GITLAB_API_VERSION, GitLabPlugin.V3_API_VERSION);
-        Assertions.assertThat(config.apiVersion()).isEqualTo(GitLabPlugin.V3_API_VERSION);
     }
 
     @Test
