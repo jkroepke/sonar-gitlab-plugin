@@ -108,7 +108,7 @@ For SonarQube >= 7.0:
 
 Example:
 
-### Issues mode (Preview)
+### Issues mode (Preview) - removed in Version 4.1.0
 
 With Maven
 
@@ -156,25 +156,7 @@ Works with `sonar-scanner` and `gradle`
 
 .gitlab-ci.yml sample for Maven project, comment last commit:
 
-```yml
-sonarqube_master_job:
-  stage: test
-  only:
-    - master
-  script:
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN
-
-sonarqube_preview_feature_job:
-  stage: test
-  only:
-    - /^feature\/*/
-  script:
-    - git checkout origin/master
-    - git merge $CI_COMMIT_SHA --no-commit --no-ff
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
-```
-
-With quality gate
+This plugin requires the [Community Branch Plugin](https://github.com/mc1arke/sonarqube-community-branch-plugin)  for SonarQube CE
 
 ```yml
 sonarqube_master_job:
@@ -184,27 +166,7 @@ sonarqube_master_job:
   script:
     - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
 
-sonarqube_preview_feature_job:
-  stage: test
-  only:
-    - /^feature\/*/
-  script:
-    - git checkout origin/master
-    - git merge $CI_COMMIT_SHA --no-commit --no-ff
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
-```
-
-If use SonarQube with `BranchPlugin`
-
-```yml
-sonarqube_master_job:
-  stage: test
-  only:
-    - master
-  script:
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
-
-sonarqube_preview_feature_job:
+sonarqube_feature_job:
   stage: test
   only:
     - /^feature\/*/
@@ -235,14 +197,14 @@ sonarqube_master_job:
     paths:
       - codeclimate.json
 
-sonarqube_preview_feature_job:
+sonarqube_feature_job:
   stage: test
   only:
     - /^feature\/*/
   script:
     - git checkout origin/master
     - git merge $CI_COMMIT_SHA --no-commit --no-ff
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.json_mode=CODECLIMATE -Dsonar.gitlab.failure_notification_mode=commit-status
+    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.json_mode=CODECLIMATE -Dsonar.gitlab.failure_notification_mode=commit-status
   artifacts:
     expire_in: 1 day
     paths:
@@ -267,14 +229,14 @@ stages:
   - test
   - quality
   ...
-sonarqube_preview_feature_job:
+sonarqube_feature_job:
   stage: test
   only:
     - /^feature\/*/
   script:
     - git checkout origin/master
     - git merge $CI_COMMIT_SHA --no-commit --no-ff
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.json_mode=SAST -Dsonar.gitlab.failure_notification_mode=commit-status
+    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.json_mode=SAST -Dsonar.gitlab.failure_notification_mode=commit-status
   artifacts:
     expire_in: 1 day
     paths:
@@ -299,7 +261,6 @@ NOTE: This CI variable `CI_MERGE_REQUEST_IID` is available from version 11.6 on.
 mvn --batch-mode verify sonar:sonar \
     -Dsonar.host.url=$SONAR_URL
     -Dsonar.login=$SONAR_LOGIN \
-    -Dsonar.analysis.mode=preview \
     -Dsonar.gitlab.api_version=v4 \
     -Dsonar.gitlab.project_id=$CI_PROJECT_PATH \
     -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA \
@@ -328,11 +289,11 @@ https://docs.gitlab.com/ce/ci/variables/#9-0-renaming
 | sonar.gitlab.commit_sha | SHA of the commit comment | Variable | >= 1.6.6 |
 | sonar.gitlab.ref | Branch name or reference of the commit | Variable | < 3.0.0 |
 | sonar.gitlab.ref_name | Branch name or reference of the commit | Variable | >= 1.6.6 |
-| sonar.gitlab.max_blocker_issues_gate | Max blocker issue for build failed (default 0). Note: only for preview mode | Project, Variable | >= 2.0.0 |
-| sonar.gitlab.max_critical_issues_gate | Max critical issues for build failed (default 0). Note: only for preview mode | Project, Variable | >= 2.0.0 |
-| sonar.gitlab.max_major_issues_gate | Max major issues for build failed (default -1 no fail). Note: only for preview mode | Project, Variable | >= 2.0.0 |
-| sonar.gitlab.max_minor_issues_gate | Max minor issues for build failed (default -1 no fail). Note: only for preview mode | Project, Variable | >= 2.0.0 |
-| sonar.gitlab.max_info_issues_gate | Max info issues for build failed (default -1 no fail). Note: only for preview mode | Project, Variable | >= 2.0.0 |
+| sonar.gitlab.max_blocker_issues_gate | Max blocker issue for build failed (default 0). | Project, Variable | >= 2.0.0 |
+| sonar.gitlab.max_critical_issues_gate | Max critical issues for build failed (default 0). | Project, Variable | >= 2.0.0 |
+| sonar.gitlab.max_major_issues_gate | Max major issues for build failed (default -1 no fail). | Project, Variable | >= 2.0.0 |
+| sonar.gitlab.max_minor_issues_gate | Max minor issues for build failed (default -1 no fail). | Project, Variable | >= 2.0.0 |
+| sonar.gitlab.max_info_issues_gate | Max info issues for build failed (default -1 no fail). | Project, Variable | >= 2.0.0 |
 | sonar.gitlab.ignore_certificate | Ignore Certificate for access GitLab, use for auto-signing cert (default false) | Administration, Variable | >= 2.0.0 |
 | sonar.gitlab.comment_no_issue | Add a comment even when there is no new issue (default false) | Administration, Variable | >= 2.0.0 |
 | sonar.gitlab.disable_inline_comments | Disable issue reporting as inline comments (default false) | Administration, Variable | >= 2.0.0 |
@@ -607,7 +568,6 @@ mvn --batch-mode verify sonar:sonar
       -Dsonar.gitlab.api_version=v4
       -Dsonar.host.url=http://<your_sonar_url>:9000
       -Dsonar.login=<your_sonar_login>
-      -Dsonar.analysis.mode=preview
       -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA
       -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
       -Dsonar.gitlab.project_id=$CI_PROJECT_ID
