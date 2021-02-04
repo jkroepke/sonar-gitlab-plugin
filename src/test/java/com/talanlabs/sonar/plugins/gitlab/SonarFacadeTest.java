@@ -134,7 +134,7 @@ public class SonarFacadeTest {
         createReportTaskFile();
 
         QualityGate qualityGate = sonarFacade.loadQualityGate();
-        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).contains(QualityGate.Status.OK);
+        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).isEqualTo(QualityGate.Status.OK);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class SonarFacadeTest {
         createReportTaskFile();
 
         QualityGate qualityGate = sonarFacade.loadQualityGate();
-        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).contains(QualityGate.Status.WARN);
+        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).isEqualTo(QualityGate.Status.WARN);
     }
 
     @Test
@@ -169,7 +169,7 @@ public class SonarFacadeTest {
         createReportTaskFile();
 
         QualityGate qualityGate = sonarFacade.loadQualityGate();
-        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).contains(QualityGate.Status.OK);
+        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).isEqualTo(QualityGate.Status.OK);
     }
 
     @Test
@@ -189,7 +189,7 @@ public class SonarFacadeTest {
         createReportTaskFile();
 
         QualityGate qualityGate = sonarFacade.loadQualityGate();
-        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).contains(QualityGate.Status.OK);
+        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).isEqualTo(QualityGate.Status.OK);
     }
 
     @Test
@@ -238,7 +238,7 @@ public class SonarFacadeTest {
         createReportTaskFile();
 
         QualityGate qualityGate = sonarFacade.loadQualityGate();
-        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).contains(QualityGate.Status.ERROR);
+        Assertions.assertThat(qualityGate).isNotNull().extracting(QualityGate::getStatus).isEqualTo(QualityGate.Status.ERROR);
         Assertions.assertThat(qualityGate.getConditions())
                 .extracting(QualityGate.Condition::getActual, QualityGate.Condition::getMetricKey, QualityGate.Condition::getMetricName, QualityGate.Condition::getStatus,
                         QualityGate.Condition::getWarning, QualityGate.Condition::getError).contains(Tuple.tuple("10", "security_rating", "Security Rating", QualityGate.Status.OK, "", ""),
