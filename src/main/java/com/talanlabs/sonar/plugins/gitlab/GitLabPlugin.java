@@ -72,7 +72,6 @@ public class GitLabPlugin implements Plugin {
     public static final String CATEGORY = "gitlab";
     public static final String SUBCATEGORY = "reporting";
 
-    public static final String V3_API_VERSION = "v3";
     public static final String V4_API_VERSION = "v4";
 
     public static List<PropertyDefinition> definitions() {
@@ -133,7 +132,7 @@ public class GitLabPlugin implements Plugin {
                         PropertyDefinition.builder(GITLAB_PREFIX_DIRECTORY).name("Prefix directory for GitLab link").description("Add prefix for GitLab link").category(CATEGORY).subCategory(SUBCATEGORY)
                                 .type(PropertyType.STRING).defaultValue("").index(24).build(),
                         PropertyDefinition.builder(GITLAB_API_VERSION).name("Set GitLab API version").description("GitLab API version").category(CATEGORY).subCategory(SUBCATEGORY)
-                                .type(PropertyType.SINGLE_SELECT_LIST).options(V3_API_VERSION, V4_API_VERSION).defaultValue(V4_API_VERSION).index(25).build(),
+                                .type(PropertyType.SINGLE_SELECT_LIST).options(V4_API_VERSION).defaultValue(V4_API_VERSION).index(25).build(),
                         PropertyDefinition.builder(GITLAB_ALL_ISSUES).name("All issues").description("Show all issues. (Default false, only new)").category(CATEGORY).subCategory(SUBCATEGORY)
                                 .type(PropertyType.BOOLEAN).defaultValue(String.valueOf(false)).index(26).build(),
                         PropertyDefinition.builder(GITLAB_JSON_MODE).name("Generate json report").description("Create a json report in root for GitLab EE").category(CATEGORY).subCategory(SUBCATEGORY)
