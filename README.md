@@ -7,6 +7,11 @@ Inspired by https://github.com/SonarCommunity/sonar-github
 
 # Current version
 
+
+## Version 4.3.1
+
+* removed obsolete v3 API
+
 ## Version 4.3.0
 
  * merged [fingerprint fix PR](https://github.com/javamachr/sonar-gitlab-plugin/pull/1)
