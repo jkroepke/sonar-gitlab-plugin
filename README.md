@@ -181,7 +181,7 @@ sonarqube_feature_job:
     - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.branch.name=$CI_COMMIT_REF_NAME
 ```
 
-For get code quality (`codeclimate.json`) in merge request (only GitLab EE https://docs.gitlab.com/ee/user/project/merge_requests/code_quality_diff.html)
+For get code quality (`gl-code-quality-report.json`) in merge request (only GitLab EE https://docs.gitlab.com/ee/user/project/merge_requests/code_quality_diff.html)
 
 > Warning, master must have a `codequality.json`, use `commit-status` for notification mode (not mandatory)
 
@@ -200,7 +200,7 @@ sonarqube_master_job:
   artifacts:
     expire_in: 1 day
     paths:
-      - codeclimate.json
+      - gl-code-quality-report.json
 
 sonarqube_feature_job:
   stage: test
@@ -213,7 +213,7 @@ sonarqube_feature_job:
   artifacts:
     expire_in: 1 day
     paths:
-      - codeclimate.json
+      - gl-code-quality-report.json
 
 codequality:
   stage: quality
@@ -223,7 +223,7 @@ codequality:
     - echo ok
   artifacts:
     paths:
-      - codeclimate.json
+      - gl-code-quality-report.json
 ```
 
 For get SAST (`gl-sast-report.json`) information in merge request (only GitLab EE https://docs.gitlab.com/ee/user/project/merge_requests/sast.html)
@@ -313,7 +313,7 @@ https://docs.gitlab.com/ce/ci/variables/#9-0-renaming
 | sonar.gitlab.prefix_directory | Add prefix when create link for GitLab | Variable | >= 2.1.0 |
 | sonar.gitlab.api_version | GitLab API version (default `v4`) | Administration, Variable | >= 2.1.0 |
 | sonar.gitlab.all_issues | All issues new and old (default false, only new) | Administration, Variable | >= 2.1.0 |
-| sonar.gitlab.json_mode | Create a json report in root for GitLab EE (codeclimate.json or gl-sast-report.json) | Project, Variable | >= 3.0.0 |
+| sonar.gitlab.json_mode | Create a json report in root for GitLab EE (gl-code-quality-report.json or gl-sast-report.json) | Project, Variable | >= 3.0.0 |
 | sonar.gitlab.query_max_retry | Max retry for wait finish analyse for publish mode | Administration, Variable | >= 3.0.0 |
 | sonar.gitlab.query_wait | Max retry for wait finish analyse for publish mode | Administration, Variable | >= 3.0.0 |
 | sonar.gitlab.quality_gate_fail_mode | Quality gate fail mode: error, warn or none (default error) | Administration, Variable | >= 3.0.0 |

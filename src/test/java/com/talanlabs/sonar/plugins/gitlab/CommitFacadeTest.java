@@ -86,7 +86,7 @@ public class CommitFacadeTest {
 
         facade.writeJsonFile("[{\"tool\":\"sonarqube\",\"fingerprint\":\"null\",\"message\":\"Issue\",\"file\":\"file\",\"line\":\"0\",\"priority\":\"INFO\",\"solution\":\"http://myserver\"}]");
 
-        File file = new File(projectBaseDir, "codeclimate.json");
+        File file = new File(projectBaseDir, "gl-code-quality-report.json");
         Assertions.assertThat(file).exists().hasContent("[{\"tool\":\"sonarqube\",\"fingerprint\":\"null\",\"message\":\"Issue\",\"file\":\"file\",\"line\":\"0\",\"priority\":\"INFO\",\"solution\":\"http://myserver\"}]");
     }
 
@@ -114,7 +114,7 @@ public class CommitFacadeTest {
 
         facade.writeJsonFile("[{\"tool\":\"sonarqube\",\"fingerprint\":\"null\",\"message\":\"Issue\",\"file\":\"file\",\"line\":\"0\",\"priority\":\"INFO\",\"solution\":\"http://myserver\"}]");
 
-        File file = new File(projectBaseDir, "codeclimate.json");
+        File file = new File(projectBaseDir, "gl-code-quality-report.json");
         Assertions.assertThat(projectBaseDir.listFiles((p) -> p.getPath().endsWith(".json"))).isEmpty();
     }
 

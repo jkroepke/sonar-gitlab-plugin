@@ -45,7 +45,7 @@ public class CommitFacade {
 
     private static final Logger LOG = Loggers.get(CommitFacade.class);
 
-    private static final String CODECLIMATE_JSON_NAME = "codeclimate.json";
+    private static final String CODECLIMATE_JSON_NAME = "gl-code-quality-report.json";
     private static final String SAST_JSON_NAME = "gl-sast-report.json";
 
     private final GitLabPluginConfiguration gitLabPluginConfiguration;
