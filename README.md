@@ -7,7 +7,14 @@ Inspired by https://github.com/SonarCommunity/sonar-github
 
 # Current version
 
+## Version 5.0.0
 
+ * merged [Rename codeclimate.json to gl-code-quality-report.json](https://github.com/javamachr/sonar-gitlab-plugin/pull/2)
+
+ Requires GL >= 11.0 and adjustment of JOBS to use new name of config gl-code-quality-report.json
+   
+   **Only GitLab >= 11.0**
+   
 ## Version 4.3.1
 
 * removed obsolete v3 API
